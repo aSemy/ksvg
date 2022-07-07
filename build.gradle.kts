@@ -17,10 +17,18 @@
 plugins {
     kotlin("multiplatform") version "1.7.0"
     `maven-publish`
+    id("me.qoomon.git-versioning") version "6.2.0"
 }
 
 group = "com.github.nwillc"
-version = "3.1.0-SNAPSHOT"
+version = "0.0.0-SNAPSHOT"
+gitVersioning.apply {
+    refs {
+        branch(".+") { version = "\${ref}-SNAPSHOT" }
+        tag("v(?<version>.*)") { version = "\${ref.version}" }
+    }
+    rev { version = "\${commit}" }
+}
 
 logger.lifecycle("${project.group}.${project.name}@${project.version}")
 
